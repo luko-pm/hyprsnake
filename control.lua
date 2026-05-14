@@ -6,6 +6,7 @@ return {
             hl.bind(maps.turn_l,function()  game.turn_snake('l') end)
             hl.bind(maps.exit, function() game.terminate() end)
             hl.bind("Escape", function() game.terminate() end) -- always bind escape to exit, just in case
+            hl.bind("catchall", function() end) -- to prevent other keys to do stuff
         end)
     end,
 
