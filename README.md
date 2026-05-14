@@ -6,6 +6,11 @@ Tiny little snake game to play when you get bored of porting your config to lua.
 It is not finished at all. I will improve and fully anotate the code but the idea is there and it does work (for me at least).
 But yeah I am not exactly Mr.Engeneer just yet so if you take a moment to read the code and give me some pointers or even make a PR that would be awesome.
 
+# Requirements
+## Foot
+I wanted the pixels to be real windows to ebrace the config as an engine. This does mean you need foot, which is a very lightweight terminal, to render the pixels.
+I dont like it either but it is what it is for now.
+
 # "Instalation"
 Clone the repo into your config.
 
