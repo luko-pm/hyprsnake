@@ -181,7 +181,7 @@ Game.start_game = function()
     dir_changed = false
     running = true
     t.start()
-    c.enable_mapings()
+    c.enable_maps()
 end
 
 Game.terminate = function()
