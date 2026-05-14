@@ -1,6 +1,6 @@
 ---@meta
 
 ---@alias Pos {x: number, y: number}
----@alias Cell {id: number, pos: Pos}
----@alias Body {pos: Pos, id: number, next: Body}
----@alias Grid {size: {x: number, y: number}, cells: number[][]}
+---@alias Cell {id: number, pos: Pos, color: string}
+---@alias Body {id: number, pos: Pos, color: string, next: Body}
+---@alias Grid {size: number[], cells: number[][]}

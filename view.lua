@@ -65,15 +65,13 @@ local function clear_ws()
     end
 end
 
-View.setup = function(grid_size, snake_color)
+-- View.setup = function() end
+
+View.start = function(grid_size)
     monitor = hl.get_active_monitor()
     cell_size = {(monitor.width/grid_size[1])/monitor.scale, (monitor.height/grid_size[2])/monitor.scale}
-    cell_color = snake_color
+    cell_color = snake_color or cell_color
     setup_rules()
-    init_ws()
-end
-
-View.start = function()
     init_ws()
 end
 
@@ -81,7 +79,7 @@ View.draw_cell = function(cell)
     local title = "snakeGame_"..cell.id
     local relative_pos = game_pos_to_relative(cell.pos)
     local abs_pos_string = tostring(relative_pos[1]) .. " " .. tostring(relative_pos[2])
-    hl.exec_cmd(gen_pixel_cmd(title,nil), {
+    hl.exec_cmd(gen_pixel_cmd(title,cell.color), {
         move = abs_pos_string,
         tag = "snake_game",
     })

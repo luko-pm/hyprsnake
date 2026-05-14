@@ -14,9 +14,11 @@ local initial_pos = {}
 
 ---@type Body
 local head
+local snake_color
 
 ---@type Cell
 local food = nil
+local food_color
 
 local dir = nil
 local dir_changed = nil
@@ -27,9 +29,9 @@ local running = nil
 local grid = {size = {}, cells = {}}
 
 local function init_grid()
-    for x=1, grid.size.x do
+    for x=1, grid.size[1] do
         grid.cells[x] = {}
-        for y=1, grid.size.x do
+        for y=1, grid.size[1] do
             grid.cells[x][y] = 0
         end
     end
@@ -39,8 +41,8 @@ end
 local function get_empy_cells()
     local res = {}
     local n = 0
-    for x=1, grid.size.x do
-        for y=1, grid.size.y do
+    for x=1, grid.size[1] do
+        for y=1, grid.size[2] do
             if grid.cells[x][y] == 0 then
                 table.insert(res, {x = x, y = y})
                 n = n + 1
@@ -51,7 +53,7 @@ local function get_empy_cells()
 end
 
 local function create_snake(init_pos, id)
-    head = {pos = init_pos, id = id}
+    head = {pos = init_pos, id = id, color = snake_color}
     head.next = head
     return head
 end
@@ -63,7 +65,7 @@ local function get_next_food_pos()
 end
 
 local function create_food(id)
-    food = { id = id, pos = get_next_food_pos() }
+    food = { id = id, pos = get_next_food_pos(), color = food_color}
     return food
 end
 
@@ -114,7 +116,7 @@ end
 
 local function snake_grow(next_pos)
     length = length + 1
-    local new_head = { pos = next_pos, id = length, next = head.next}
+    local new_head = { pos = next_pos, id = length, color = snake_color, next = head.next}
     head.next = new_head
     head = new_head
     v.draw_cell(head)
@@ -124,8 +126,8 @@ end
 local function is_out_of_bounds(pos)
     if pos.x < 1 then return true
     elseif pos.y < 1 then return true
-    elseif pos.x > grid.size.x then return true
-    elseif pos.y > grid.size.y then return true
+    elseif pos.x > grid.size[1] then return true
+    elseif pos.y > grid.size[2] then return true
     else return false
     end
 end
@@ -156,10 +158,12 @@ Game.tick = function()
     end
 end
 
-Game.setup = function(grid_size, tick_speed, timer, view, control)
-    grid.size.x = grid_size[1]
-    grid.size.y = grid_size[2]
-    initial_pos = {x = math.ceil(grid.size.x/2), y = math.ceil(grid.size.y/2)}
+Game.setup = function(grid_size, tick_speed, color, timer, view, control)
+    grid.size[1] = grid_size[1]
+    grid.size[2] = grid_size[2]
+    initial_pos = {x = math.ceil(grid.size[1]/2), y = math.ceil(grid.size[2]/2)}
+    snake_color = color
+    food_color = color
     t = timer
     t.setup(Game.tick, tick_speed)
     v = view
@@ -168,7 +172,7 @@ end
 
 Game.start_game = function()
     init_grid()
-    v.start()
+    v.start(grid.size)
 
     length = 1
     create_snake(initial_pos, length)

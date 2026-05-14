@@ -46,8 +46,8 @@ local function setup()
     timer = timer or require('timer')
     view = view or require('view')
 
-    view.setup(opts.grid_size, opts.snake_color)
-    game.setup(opts.grid_size, opts.tick_speed, timer, view, control)
+    --view.setup(opts.grid_size, opts.snake_color)
+    game.setup(opts.grid_size, opts.tick_speed, opts.snake_color, timer, view, control)
     control.setup(game,opts.maps)
 
     setup_done = true
