@@ -13,7 +13,7 @@ I'm not what you would call a pro developer just yet, so any advice, suggestions
 - Hyprland 0.55
 - Foot: I wanted the pixels to be real windows to embrace the engine being the config itself. This does mean that, for now, you need foot (very lightweight terminal) to render the pixels.
 
-# "Instalation"
+# "Installation"
 
 Clone the repo into your config.
 
