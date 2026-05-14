@@ -52,7 +52,7 @@ Hyprsnake.set_opts({
     },
     grid_size = {32, 18}, -- explanation below
     snake_color = "ffffff", -- RGB
-}
+})
 
 -- Set a bind to launch the game
 hl.bind(MainMod .. " + S", function() Hyprsnake.launch() end)
