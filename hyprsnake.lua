@@ -12,8 +12,8 @@ local opts_set = false
 
 local opts = {}
 local def_opts = {
-    tick_speed = 250,
-    controls = {
+    tick_speed = 200,
+    maps = {
         turn_r = 'right',
         turn_l = 'left',
         exit = 'Escape'
@@ -26,10 +26,10 @@ local function set_opts(usr_opts)
     opts.tick_speed = usr_opts.tick_speed or def_opts.tick_speed
     opts.grid_size = usr_opts.grid_size or def_opts.grid_size
 
-    usr_opts.controls = usr_opts.controls or {}
-    opts.controls = {}
-    for k, v in pairs(def_opts.controls) do
-        opts.controls[k] = usr_opts.controls[k] or v
+    usr_opts.maps = usr_opts.maps or {}
+    opts.maps = {}
+    for k, v in pairs(def_opts.maps) do
+        opts.maps[k] = usr_opts.maps[k] or v
     end
     opts_set = true
 end
@@ -46,7 +46,7 @@ local function setup()
 
     view.setup(opts.grid_size)
     game.setup(opts.grid_size, opts.tick_speed, timer, view, control)
-    control.setup(game,opts.controls)
+    control.setup(game,opts.maps)
 
     setup_done = true
 end
@@ -67,6 +67,6 @@ return {
         timer.stop()
         game.terminate()
         view.clear()
-        control.disable_controls()
+        control.disable_maps()
     end,
 }

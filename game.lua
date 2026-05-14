@@ -181,12 +181,12 @@ Game.start_game = function()
     dir_changed = false
     running = true
     t.start()
-    c.enable_controls()
+    c.enable_mapings()
 end
 
 Game.terminate = function()
     running = false
-    c.disable_controls()
+    c.disable_maps()
     t.stop()
     v.clear()
 end
