@@ -8,6 +8,9 @@ local cell_color
 ---@type HL.WindowRule
 local winRule = nil
 
+---@type HL.Monitor
+local monitor
+
 local function setup_rules()
     hl.workspace_rule({
         --name = "snake-wsRule",
@@ -35,17 +38,19 @@ local function gen_pixel_cmd(title, color)
     return string.format("foot --title=%s --override=colors-dark.background=%s --override=colors-dark.cursor=%s\\ %s --override=scrollback.lines=0 sh -c 'exec sleep infinity'", title, bg_color, c_txt_color, c_bg_color)
 end
 
-local function pos_to_coords(pos)
+local function game_pos_to_relative(pos)
     local coords = {
-        (pos.x - 1) * cell_size[1],
-        (pos.y - 1) * cell_size[2]
+        ((pos.x - 1) * cell_size[1]),
+        ((pos.y - 1) * cell_size[2])
     }
     return coords
 end
 
-local function pos_to_string(pos)
-    local coords = pos_to_coords(pos)
-    return tostring(coords[1]) .. " " .. tostring(coords[2])
+local function game_pos_to_absolute(pos)
+    local coords = game_pos_to_relative(pos)
+    coords[1] = coords[1] + monitor.position.x
+    coords[2] = coords[2] + monitor.position.y
+    return coords
 end
 
 local function init_ws()
@@ -61,7 +66,7 @@ local function clear_ws()
 end
 
 View.setup = function(grid_size, snake_color)
-    local monitor = hl.get_active_monitor()
+    monitor = hl.get_active_monitor()
     cell_size = {(monitor.width/grid_size[1])/monitor.scale, (monitor.height/grid_size[2])/monitor.scale}
     cell_color = snake_color
     setup_rules()
@@ -74,16 +79,16 @@ end
 
 View.draw_cell = function(cell)
     local title = "snakeGame_"..cell.id
-    local abs_pos_string = pos_to_string(cell.pos)
+    local relative_pos = game_pos_to_relative(cell.pos)
+    local abs_pos_string = tostring(relative_pos[1]) .. " " .. tostring(relative_pos[2])
     hl.exec_cmd(gen_pixel_cmd(title,nil), {
         move = abs_pos_string,
         tag = "snake_game",
-        color = color,
     })
 end
 
 View.update_cell_pos = function(cell)
-    local coords = pos_to_coords(cell.pos)
+    local coords = game_pos_to_absolute(cell.pos)
     local title = "initialtitle:snakeGame_"..cell.id
     hl.dispatch(hl.dsp.focus({window = title}))
     hl.dispatch(hl.dsp.window.move({x = coords[1], y = coords[2]}))
@@ -91,7 +96,7 @@ end
 
 View.notify = function(text, timeout, notif_color)
     timeout = timeout or 5000
-    color = color or nil
+    notif_color = notif_color or nil
     hl.notification.create({text = text, color = notif_color, timeout = timeout})
 end
 

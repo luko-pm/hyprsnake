@@ -64,7 +64,6 @@ end
 
 local function create_food(id)
     food = { id = id, pos = get_next_food_pos() }
-    v.draw_cell(food)
     return food
 end
 
@@ -176,6 +175,7 @@ Game.start_game = function()
     v.draw_cell(head)
 
     create_food(0)
+    v.draw_cell(food)
 
     dir = 'r'
     dir_changed = false
