@@ -8,7 +8,7 @@ But yeah I am not exactly Mr.Engeneer just yet so if you take a moment to read t
 
 # Requirements
 ## Foot
-I wanted the pixels to be real windows to ebrace the config as an engine. This does mean you need foot, which is a very lightweight terminal, to render the pixels.
+I wanted the pixels to be real windows to embrace the config as an engine. This does mean you need foot, which is a very lightweight terminal, to render the pixels.
 I dont like it either but it is what it is for now.
 
 # "Instalation"
