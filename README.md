@@ -8,7 +8,7 @@ But yeah I am not exactly Mr.Engeneer just yet so if you take a moment to read t
 
 # Requirements
 ## Foot
-I wanted the pixels to be real windows to embrace the config as an engine. This does mean you need foot, which is a very lightweight terminal, to render the pixels.
+I wanted the pixels to be real windows to embrace the config as an engine. This does mean you need foot (very lightweight terminal) to render the pixels.
 I dont like it either but it is what it is for now.
 
 # "Instalation"
@@ -53,4 +53,4 @@ hl.bind(MainMod .. " + S", function() Hyprsnake.launch() end)
 
 ## grid_size
 The dimensions of the playing grid, this means your screen will be split into "pixels" using this dimentions.
-If the ratio of yout grid_size doesnt match the ratio of your monitor you will be playing with rectangles, be aware (unless you are into that short of thing, I dont judge)
+If the ratio of yout grid_size doesnt match the ratio of your monitor you will be playing with rectangles, be ware (unless you are into that short of thing, I dont judge)
