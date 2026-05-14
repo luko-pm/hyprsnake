@@ -19,12 +19,14 @@ local def_opts = {
         exit = 'Escape'
     },
     grid_size = {32, 18},
+    snake_color = "ffffff",
 }
 
 local function set_opts(usr_opts)
     usr_opts = usr_opts or {}
     opts.tick_speed = usr_opts.tick_speed or def_opts.tick_speed
     opts.grid_size = usr_opts.grid_size or def_opts.grid_size
+    opts.snake_color = usr_opts.snake_color or def_opts.snake_color
 
     usr_opts.maps = usr_opts.maps or {}
     opts.maps = {}
@@ -44,7 +46,7 @@ local function setup()
     timer = timer or require('timer')
     view = view or require('view')
 
-    view.setup(opts.grid_size)
+    view.setup(opts.grid_size, opts.snake_color)
     game.setup(opts.grid_size, opts.tick_speed, timer, view, control)
     control.setup(game,opts.maps)
 

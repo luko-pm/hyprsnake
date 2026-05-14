@@ -3,6 +3,8 @@ local View = {}
 local ws_name = 'special:snake'
 --local ws_name = 'snake'
 local cell_size = {}
+local cell_color
+
 ---@type HL.WindowRule
 local winRule = nil
 
@@ -27,8 +29,10 @@ end
 
 
 local function gen_pixel_cmd(title, color)
-    color = color or "ffffff"
-    return ("foot --title="..title.." --override=colors-dark.background="..color.." --override=scrollback.lines=0 sh -c 'exec sleep infinity'")
+    local bg_color = color or cell_color
+    local c_bg_color = bg_color
+    local c_txt_color = c_bg_color == "ffffff" and "000000" or "ffffff" -- foot doesn't allow this to be the same
+    return string.format("foot --title=%s --override=colors-dark.background=%s --override=colors-dark.cursor=%s\\ %s --override=scrollback.lines=0 sh -c 'exec sleep infinity'", title, bg_color, c_txt_color, c_bg_color)
 end
 
 local function pos_to_coords(pos)
@@ -56,9 +60,10 @@ local function clear_ws()
     end
 end
 
-View.setup = function(grid_size)
+View.setup = function(grid_size, snake_color)
     local monitor = hl.get_active_monitor()
     cell_size = {(monitor.width/grid_size[1])/monitor.scale, (monitor.height/grid_size[2])/monitor.scale}
+    cell_color = snake_color
     setup_rules()
     init_ws()
 end
@@ -72,7 +77,8 @@ View.draw_cell = function(cell)
     local abs_pos_string = pos_to_string(cell.pos)
     hl.exec_cmd(gen_pixel_cmd(title,nil), {
         move = abs_pos_string,
-        tag = "snake_game"
+        tag = "snake_game",
+        color = color,
     })
 end
 
@@ -83,10 +89,10 @@ View.update_cell_pos = function(cell)
     hl.dispatch(hl.dsp.window.move({x = coords[1], y = coords[2]}))
 end
 
-View.notify = function(text, timeout, color)
+View.notify = function(text, timeout, notif_color)
     timeout = timeout or 5000
     color = color or nil
-    hl.notification.create({text = text, color = color, timeout = timeout})
+    hl.notification.create({text = text, color = notif_color, timeout = timeout})
 end
 
 View.clear = function()
